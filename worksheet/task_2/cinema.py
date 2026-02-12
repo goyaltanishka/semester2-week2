@@ -19,7 +19,7 @@ def customer_tickets(conn, customer_id):
     Order results by film title alphabetically.
     """
     cursor=conn.cursor()
-    cursor.execute("SELECT films.title,screenings.screens,tickets.price FROM films JOIN screenings ON films.film_id= screenings.film_id JOIN tickets ON screenings.screening_id=tickets.screening_id GROUP BY customers.customer_id;")
+    cursor.execute("SELECT films.title,screenings.screen,tickets.price FROM films JOIN screenings ON films.film_id= screenings.film_id JOIN tickets ON screenings.screening_id=tickets.screening_id GROUP BY customers.customer_id;")
     row=cursor.fetchall()
     return cursor.fetchall()
 
