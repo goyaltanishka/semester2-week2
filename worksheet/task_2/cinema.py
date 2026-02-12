@@ -18,9 +18,19 @@ def customer_tickets(conn, customer_id):
     Include only tickets purchased by the given customer_id.
     Order results by film title alphabetically.
     """
-    cursor=conn.cursor()
-    cursor.execute("SELECT films.title,screenings.screen,tickets.price FROM films JOIN screenings ON films.film_id= screenings.film_id JOIN tickets ON screenings.screening_id=tickets.screening_id GROUP BY customer_id;")
-    row=cursor.fetchall()
+   cursor = conn.cursor()
+    
+    cursor.execute("""
+        SELECT films.title, screenings.screen, tickets.price
+        FROM tickets
+        JOIN screenings 
+            ON tickets.screening_id = screenings.screening_id
+        JOIN films 
+            ON screenings.film_id = films.film_id
+        WHERE tickets.customer_id = ?
+        ORDER BY films.title ASC
+    """, (customer_id,))
+    
     return cursor.fetchall()
 
     
