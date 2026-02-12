@@ -21,6 +21,7 @@ def customer_tickets(conn, customer_id):
     cursor=conn.cursor()
     cursor.execute=("SELECT film.title,screenings.screens,tickets.price FROM flims JOIN screenings ON flims.film_id= screenings.flim_id JOIN tickets ON screenings.screening_id=tickets.screening_id GROUP BY customers.customer_id;")
     row=cursor.fetchall()
+    return customer_tickets
     
 
 
@@ -35,7 +36,7 @@ def screening_sales(conn):
     cursor=conn.cursor
     cursor.execute=("SELECT screenings.screening_id,films.film_title,tickets.tickets_sold FROM screenings LEFT JOIN tickets ON screenings.screening_id=tickets.screening_id ORDER BY tickets.tickets_sold DESC;")
     row=cursor.fetchall()
-   
+    return screening_sales
 
 
 def top_customers_by_spend(conn, limit):
@@ -51,4 +52,5 @@ def top_customers_by_spend(conn, limit):
     cursor=conn.cursor
     cursor.execute=("SELECT customers.customer_id, SUM(tickets.price) AS total_spent FROM customers JOIN tickets ON tickets.customer_id=customers.customer_id ORDER BY total_spent DESC;")
     row=cursor.fetchall()
+    return top_customers_by_spend
     
