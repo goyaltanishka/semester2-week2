@@ -20,17 +20,8 @@ def customer_tickets(conn, customer_id):
     """
    cursor = conn.cursor()
     
-    cursor.execute("""
-        SELECT films.title, screenings.screen, tickets.price
-        FROM tickets
-        JOIN screenings 
-            ON tickets.screening_id = screenings.screening_id
-        JOIN films 
-            ON screenings.film_id = films.film_id
-        WHERE tickets.customer_id = ?
-        ORDER BY films.title ASC
-    """, (customer_id,))
-    
+    cursor.execute("SELECT films.title, screenings.screen, tickets.price FROM tickets JOIN screenings ON tickets.screening_id = screenings.screening_id JOIN films ON screenings.film_id = films.film_id WHERE tickets.customer_id = ? ORDER BY films.title ASC", (customer_id,))
+ 
     return cursor.fetchall()
 
     
